@@ -1,7 +1,7 @@
 import http from 'node:http'
 import fs from 'node:fs'
 
-// create the server object
+
 
 const routes = {
     '/': 'index.html',
@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
                     //replace the date in the html template
                     data = data.toString()
                     
-                    // prepare the login tags rendering
+                    // prepare the logic tags rendering
                     let tagsArray = productData['tags']
                     for (let i = tagsArray.length - 1; i > 0; i--){
                         let x = Math.floor(Math.random() * (i + 1));
