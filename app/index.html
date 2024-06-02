@@ -30,14 +30,6 @@
             integrateElement('p', json.price.currency, body)
         }
 
-        function mix(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const x = Math.floor(Math.random() * (i + 1));
-                [array[i], array[x]] = [array[x], array[i]];
-            }
-            return array;
-        }
-
         fetch('/api/product')
             .then(response => response.json())
             .then(json => renderProductData(json))
