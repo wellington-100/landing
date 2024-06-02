@@ -14,12 +14,15 @@ const server = http.createServer((req, res) => {
    
     if (routes[req.url]) {
         fs.readFile(routes[req.url], (err, data) =>{
-            
             res.write(data)
             res.end()
         })
     } else if (req.url == '/api/product'){
+        fs.readFile('data/product.json', (err, jsonData) => {
+            res.write(jsonData)
+            res.end()
 
+        })
         
     } else {
         res.write('not found')
