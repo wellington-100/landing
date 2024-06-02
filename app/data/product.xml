@@ -1,0 +1,18 @@
+<book>
+    <title>JavaScript for impatient programmers (ES2022 edition)</title>
+    <subtitle>This book makes JavaScript less challenging to learn for newcomers by offering a modern view that is as consistent as possible.</subtitle>
+    <description>Some advanced language features are not explained, but references to appropriate material are provided – for example, to my other JavaScript books at ExploringJS.com, which are free to read online. This book deliberately focuses on the language. Browser-only features, etc are not described</description>
+    <image>/jsbook.png</image>
+    <tags>
+        <tag>JS</tag>
+        <tag>learning</tag>
+        <tag>education</tag>
+        <tag>2022</tag>
+        <tag>programming</tag>
+        <tag>IT</tag>
+    </tags>
+    <price>
+        <amount>10</amount>
+        <currency>EUR</currency>
+    </price>
+</book>
