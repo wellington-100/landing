@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
                 //load the product from the .json
                 fs.readFile('data/product.json', (err, jsonData) => {
                     let productData = JSON.parse(jsonData)
+                    
                     //replace the date in the html template
                     data = data.toString()
                     
