@@ -7,12 +7,34 @@
     <link rel="icon" href="/fav.png" type="image/png">
 </head>
 <body>
-    <h1>{title}</h1>
-    <img src="{image}" alt="">
-    <h2>{subtitle}</h2>
-    <p>{description}</p>
-    <p>{priceAmount}</p>
-    <p>{priceCurrency}</p>
-    <p>{tags}</p>
+
+    <script>
+        function integrateElement(tag, content, parent) {
+            let element = document.createElement(tag)
+            element.innerText = content
+            parent.append(element)
+        }
+
+        function renderProductData(json){
+            let body = document.body
+
+            integrateElement('h1', json.title, body)
+            
+            let img = document.createElement('img')
+            img.src = '/jsbook.png'
+            body.append(img)
+
+            integrateElement('h2', json.subtitle, body)
+            integrateElement('p', json.description, body)
+            integrateElement('p', json.price.amount, body)
+            integrateElement('p', json.price.currency, body)
+        }
+
+        fetch('/api/product')
+            .then(response => response.json())
+            .then(json => renderProductData(json))
+
+    </script>
+
 </body>
 </html>
