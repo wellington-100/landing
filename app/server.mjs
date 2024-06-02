@@ -1,8 +1,6 @@
 import http from 'node:http'
 import fs from 'node:fs'
 
-
-
 const routes = {
     '/': 'index.html',
     '/style.css': 'css/style.css',
@@ -21,9 +19,7 @@ const server = http.createServer((req, res) => {
         fs.readFile('data/product.json', (err, jsonData) => {
             res.write(jsonData)
             res.end()
-
         })
-        
     } else {
         res.write('not found')
         res.end()
