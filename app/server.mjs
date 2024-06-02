@@ -20,6 +20,7 @@ const server = http.createServer((req, res) => {
         })
     } else if (req.url == '/api/product'){
 
+        
     } else {
         res.write('not found')
         res.end()
