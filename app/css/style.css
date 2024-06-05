@@ -1,0 +1,23 @@
+body {
+    background-color: #222;
+    color: white;
+}
+
+button {
+    background-color: greenyellow;
+    color: black;
+    
+}
+
+button, input {
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    width: 150px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
