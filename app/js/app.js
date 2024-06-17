@@ -3,6 +3,7 @@ let products = []
 let currentProductIndex = 0
 
 const pageContent = document.querySelector('#pageContent')
+const control = document.querySelector('#control')
 
 function integrateElement(tag, content, parent) {
     let element = document.createElement(tag)
@@ -15,6 +16,7 @@ function integrateElement(tag, content, parent) {
 function renderProductData(index) {
 
     pageContent.innerHTML = ''
+    control.innerHTML = ''
 
     let product = products[index]
 
@@ -42,12 +44,21 @@ function renderProductData(index) {
     button.addEventListener('click', () => { orderProduct(product.id)})
 
     // controls
-    let nextButton = integrateElement('button', '>>>', pageContent)
-    nextButton.addEventListener('click', () => { currentProductIndex++; renderProductData(currentProductIndex)})
+    let previousButton = integrateElement('button', '<<', control)
+    previousButton.addEventListener('click', () => {
+        currentProductIndex = (currentProductIndex > 0) ? currentProductIndex - 1 : currentProductIndex;
+        renderProductData(currentProductIndex);
+    });
+
+    let nextButton = integrateElement('button', '>>', control)
+    nextButton.addEventListener('click', () => {
+        currentProductIndex = (currentProductIndex < 2) ? currentProductIndex + 1 : currentProductIndex;
+        renderProductData(currentProductIndex);
+    });
 
     let buttonOrderInfo = integrateElement('button', 'get order info', pageContent)
     buttonOrderInfo.addEventListener('click', () => {
-        // HW5: rewrite the logic using DOM elements
+        // HW5: rewrite the logic using DOM elements        -
 
         let orderId = prompt ('Enter order id: ')
         let pin = prompt('Enter pin code: ')
@@ -67,9 +78,9 @@ function renderProductData(index) {
 }
 
 // order by user clicks:
-// HW1: make the previous button
-// HW2: add limits
-// HW3: use another carousel
+// HW1: make the previous button    DONE!
+// HW2: add limits                  DONE!
+// HW3: use another carousel        -
 const orderProduct = (productID) => {
 
     let form = document.createElement('form')

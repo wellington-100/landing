@@ -29,7 +29,7 @@
     {
         "id": 1003,
         "title": "Node Cookbook: Discover solutions, techniques, and best practices for server-side web development with Node.js 14",
-        "subtitle": "A key technology for building web applications and tooling, Node.js brings JavaScript to the server enabling full-stack development in a common language. This fourth edition of the Node Cookbook is updated with the latest Node.js features and the evolution of the Node.js framework ecosystems.",
+        "subtitle": "A key technology for building web applications and tooling, Node.js brings JavaScript to the server enabling full-stack development in a common language.",
         "description": "This practical guide will help you to get started with creating, debugging, and deploying your Node.js applications and cover solutions to common problems, along with tips to avoid pitfalls. You'll become familiar with the Node.js development model by learning how to handle files and build simple web applications and then explore established and emerging Node.js web frameworks such as Express.js and Fastify. As you advance, you'll discover techniques for detecting problems in your applications, handling security concerns, and deploying your applications to the cloud. This recipe-based guide will help you to easily navigate through various core topics of server-side web application development with Node.js.",
         "image": "/jsbook3.jpg",
         "tags": [
