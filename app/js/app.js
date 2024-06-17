@@ -1,4 +1,8 @@
 // client side javascript
+let products = []
+let currentProductIndex = 0
+
+const pageContent = document.querySelector('#pageContent')
 
 function integrateElement(tag, content, parent) {
     let element = document.createElement(tag)
@@ -8,34 +12,64 @@ function integrateElement(tag, content, parent) {
     return element
 }
 
-function renderProductData(json) {
-    let body = document.body
+function renderProductData(index) {
 
-    integrateElement('h1', json.title, body)
+    pageContent.innerHTML = ''
 
-    let img = integrateElement('img', null, body)
-    img.src = '/jsbook.png'
+    let product = products[index]
 
-    integrateElement('h2', json.subtitle, body)
-    integrateElement('p', json.description, body)
+    integrateElement('h1', product.title, pageContent)
+
+    let img = integrateElement('img', null, pageContent)
+    img.src = product.image
+
+    integrateElement('h2', product.subtitle, pageContent)
+    integrateElement('p', product.description, pageContent)
     
     let tagsContainer = document.createElement('div')
-    json.tags.forEach(tag => {
+    product.tags.forEach(tag => {
         let link = document.createElement('a')
         link.href = `/`
         link.innerText = ` #${tag} `
         tagsContainer.append(link)
     })
-    body.append(tagsContainer)
+    pageContent.append(tagsContainer)
 
-    integrateElement('p', json.price.amount, body)
-    integrateElement('p', json.price.currency, body)
+    integrateElement('p', product.price.amount, pageContent)
+    integrateElement('p', product.price.currency, pageContent)
     
-    let button = integrateElement('button', 'BUY', body)
-    button.addEventListener('click', () => {orderProduct(json.id)})
+    let button = integrateElement('button', 'BUY', pageContent)
+    button.addEventListener('click', () => { orderProduct(product.id)})
+
+    // controls
+    let nextButton = integrateElement('button', '>>>', pageContent)
+    nextButton.addEventListener('click', () => { currentProductIndex++; renderProductData(currentProductIndex)})
+
+    let buttonOrderInfo = integrateElement('button', 'get order info', pageContent)
+    buttonOrderInfo.addEventListener('click', () => {
+        // HW5: rewrite the logic using DOM elements
+
+        let orderId = prompt ('Enter order id: ')
+        let pin = prompt('Enter pin code: ')
+
+        fetch(`/api/orderinfo?order_id=${orderId}&pin=${pin}`)
+            .then(response => response.json())
+            .then(json => {
+                alert(
+                    `
+                    ${json.productId}\n
+                    ${json.orderQuantity}
+                    `
+                    )
+            })
+
+    })
 }
 
 // order by user clicks:
+// HW1: make the previous button
+// HW2: add limits
+// HW3: use another carousel
 const orderProduct = (productID) => {
 
     let form = document.createElement('form')
@@ -101,8 +135,14 @@ const orderProduct = (productID) => {
     })
 
     document.body.replaceChild(form, document.body.lastElementChild)
+
+
+
 }
 
 fetch('/api/product')
     .then(response => response.json())
-    .then(json => renderProductData(json))
+    .then(json => {
+        products = json
+        renderProductData(currentProductIndex)
+    })
