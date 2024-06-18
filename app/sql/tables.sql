@@ -1,12 +1,12 @@
 -- create products table
 CREATE TABLE products (
-    product_id INT PRIMARY KEY,
+    id INT PRIMARY KEY,
     title VARCHAR(255),
     subtitle VARCHAR(255),
     description TEXT,
-    image_url VARCHAR(255),
+    image VARCHAR(255),
     tags VARCHAR(255),
-    price_amount DECIMAL(10, 2),
+    price_amount INT,
     price_currency VARCHAR(3)
 );
 
