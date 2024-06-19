@@ -4,6 +4,8 @@ import querystring from 'node:querystring'
 import { randomUUID } from 'node:crypto'
 import postgres from 'postgres'
 
+const sql = postgres('postgres://postgres:27102010Postgresql@localhost:5432/landing_product_db')
+
 const routes = {
     '/': 'index.html',
     '/style.css': 'css/style.css',
@@ -22,8 +24,8 @@ const server = http.createServer((req, res) => {
             res.end()
         })
     } else if (req.url == '/api/product'){
-        fs.readFile('data/product.json', (err, jsonData) => {
-            res.write(jsonData)
+        sql`SELECT * FROM products`.then(data => {
+            res.write(JSON.stringify(data))
             res.end()
         })
     } else if (req.url.startsWith('/api/orderinfo')) {
@@ -60,15 +62,39 @@ const server = http.createServer((req, res) => {
             console.log(body)
         })
         req.on('end', () => {
-            let data = JSON.parse(body)
+            let order = JSON.parse(body)
             let uuid = randomUUID()
-            data.id = uuid
-            console.log(data)
-            fs.writeFile(`data/orders/${uuid}.json`, JSON.stringify(data), (err) => {
-                res.write(JSON.stringify({
-                    message: 'order placed!'
-                }))
-                res.end()
+            const {
+                productId,
+                orderEmail,
+                orderPhone,
+                orderQuantity,
+                orderPIN
+            } = order
+            
+            sql`SELECT price_amount, price_currency FROM products WHERE id = ${productId}`.then(productData => {
+
+                const priceAmount = productData[0].price_amount
+                const priceCurrency = productData[0].price_currency
+                const totalPriceAmount = priceAmount * orderQuantity
+                const totalPriceCurrency = priceCurrency
+
+                sql`INSERT INTO orders (id, product_id, order_email, order_phone, order_quantity, order_pin, total_price_amount, total_price_currency) VALUES (
+                    ${uuid},
+                    ${productId},
+                    ${orderEmail},
+                    ${orderPhone},
+                    ${orderQuantity},
+                    ${orderPIN},
+                    ${totalPriceAmount},
+                    ${totalPriceCurrency}
+                )`.then(() => {
+                    res.write(JSON.stringify({
+                        message: 'order placed!',
+                        orderId: uuid
+                    }))
+                    res.end()
+                })
             })
         })
     } else {
@@ -79,9 +105,3 @@ const server = http.createServer((req, res) => {
 
 // 3. start the server
 server.listen(8888)
-
-
-// HW create the database with the name "landing_product_db"
-//  - create the table "products (id, title ...)""
-//  - create the table "orders (id, email ...)"
-//  - insert, select, delete a few products and orders...

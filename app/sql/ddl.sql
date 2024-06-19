@@ -21,3 +21,18 @@ INSERT INTO products VALUES (
     10, 
     'EUR'
     );
+
+SELECT * FROM products;
+
+-- create orders table
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    product_id INT,
+    order_email VARCHAR(255),
+    order_phone VARCHAR(255),
+    order_quantity INT,
+    order_pin VARCHAR(255),
+    total_price_amount DECIMAL(10, 2),
+    total_price_currency VARCHAR(3),
+    FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+);

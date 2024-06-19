@@ -28,17 +28,17 @@ function renderProductData(index) {
     integrateElement('h2', product.subtitle, pageContent)
     integrateElement('p', product.description, pageContent)
     
-    let tagsContainer = document.createElement('div')
-    product.tags.forEach(tag => {
-        let link = document.createElement('a')
-        link.href = `/`
-        link.innerText = ` #${tag} `
-        tagsContainer.append(link)
-    })
-    pageContent.append(tagsContainer)
+    // let tagsContainer = document.createElement('div')
+    // product.tags.forEach(tag => {
+    //     let link = document.createElement('a')
+    //     link.href = `/`
+    //     link.innerText = ` #${tag} `
+    //     tagsContainer.append(link)
+    // })
+    // pageContent.append(tagsContainer)
 
-    integrateElement('p', product.price.amount, pageContent)
-    integrateElement('p', product.price.currency, pageContent)
+    integrateElement('p', product.price_amount, pageContent)
+    integrateElement('p', product.price_currency, pageContent)
     
     let button = integrateElement('button', 'BUY', pageContent)
     button.addEventListener('click', () => { orderProduct(product.id)})
@@ -77,10 +77,6 @@ function renderProductData(index) {
     })
 }
 
-// order by user clicks:
-// HW1: make the previous button    DONE!
-// HW2: add limits                  DONE!
-// HW3: use another carousel        -
 const orderProduct = (productID) => {
 
     let form = document.createElement('form')
