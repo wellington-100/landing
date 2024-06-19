@@ -66,12 +66,17 @@ function renderProductData(index) {
         fetch(`/api/orderinfo?order_id=${orderId}&pin=${pin}`)
             .then(response => response.json())
             .then(json => {
-                alert(
-                    `
-                    ${json.productId}\n
-                    ${json.orderQuantity}
-                    `
-                    )
+                if (json.product_id && json.order_quantity) {
+                    alert(`
+                        Product ID: ${json.product_id}\n
+                        Quantity: ${json.order_quantity}
+                    `)
+                } else {
+                    alert(json.message)
+                }
+            })
+            .catch(err => {
+                alert('Error fetching order info')
             })
 
     })

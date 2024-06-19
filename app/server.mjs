@@ -31,26 +31,24 @@ const server = http.createServer((req, res) => {
     } else if (req.url.startsWith('/api/orderinfo')) {
         let queryString = req.url.split('?')[1]
         let params = querystring.parse(queryString)
+        console.log(params)
 
-        fs.readdir('data/orders/', (err, files) => {
-            files.forEach(file => {
-                if(file.startsWith(params.order_id)){
-                    fs.readFile(`./data/orders/${file}`, (err, jsonData) => {
-                        if (err) {
-                            res.write('Order not found!')
-                            res.end()
-                        } else {
-                            let data = JSON.parse(jsonData)
-                            if (data.orderPIN == params.pin) {
-                                res.write(jsonData)
-                            } else {
-                                res.write('Not authorized!')
-                            }
-                            res.end()
-                        }
-                    })
-                }
-            })
+        // get order INFO!
+        sql`SELECT * FROM orders`.then(orderData => {
+            const order = orderData.find(order => order.id.split('-')[0] === params.order_id)
+            console.log(order.id)
+            if (!order) {
+                res.write(JSON.stringify({ message: 'Order not found!' }))
+                res.end()
+                return
+            }
+
+            if (order.order_pin === params.pin) {
+                res.write(JSON.stringify(order))
+            } else {
+                res.write(JSON.stringify({ message: 'Not authorized!' }))
+            }
+            res.end()
         })
 
         
