@@ -28,14 +28,15 @@ function renderProductData(index) {
     integrateElement('h2', product.subtitle, pageContent)
     integrateElement('p', product.description, pageContent)
     
-    // let tagsContainer = document.createElement('div')
-    // product.tags.forEach(tag => {
-    //     let link = document.createElement('a')
-    //     link.href = `/`
-    //     link.innerText = ` #${tag} `
-    //     tagsContainer.append(link)
-    // })
-    // pageContent.append(tagsContainer)
+    let tagsContainer = document.createElement('div')
+    let tags = product.tags.split(',')
+    tags.forEach(tag => {
+        let link = document.createElement('a')
+        link.href = `/`
+        link.innerText = ` #${tag} `
+        tagsContainer.append(link)
+    })
+    pageContent.append(tagsContainer)
 
     integrateElement('p', product.price_amount, pageContent)
     integrateElement('p', product.price_currency, pageContent)
